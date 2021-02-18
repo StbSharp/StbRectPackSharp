@@ -48,7 +48,7 @@ It could be addressed by creating newer and bigger Packer.
 
 I.e.
 ```c#
-    PackRectangle pr = packer.PackRect(800, 600, data4);
+    PackerRectangle pr = packer.PackRect(800, 600, data4);
     
     // Double the size of the packer until the new rectangle will fit
     while(pr == null)
@@ -56,7 +56,7 @@ I.e.
       Packer newPacker = new Packer(packer.Width * 2, packer.Height * 2);
       
       // Place existing rectangles
-      foreach(PackRectangle existingRect in packer.PackRectangles)
+      foreach(PackerRectangle existingRect in packer.PackRectangles)
       {
         newPacker.PackRect(existingRect.Width, existingRect.Height, existingRect.Data);
       }
