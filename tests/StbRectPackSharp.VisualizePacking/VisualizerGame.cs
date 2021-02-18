@@ -56,20 +56,6 @@ namespace StbImageSharp.Samples.MonoGame
 			_fontSystem.AddFont(data);
 		}
 
-		private void GrowPacker()
-		{
-			var oldPacker = _packer;
-
-			// Create new packer two times bigger than existing
-			_packer = new Packer(oldPacker.Width * 2, oldPacker.Height * 2);
-
-			// Place old rectangles
-			foreach (var r in oldPacker.PackRectangles)
-			{
-				_packer.PackRect(r.Width, r.Height, r.Data);
-			}
-		}
-
 		protected override void Update(GameTime gameTime)
 		{
 			base.Update(gameTime);
@@ -80,12 +66,25 @@ namespace StbImageSharp.Samples.MonoGame
 				var width = _random.Next(1, MaximumRectangleSize);
 				var height = _random.Next(1, MaximumRectangleSize);
 
-				var result = _packer.PackRect(width, height, color);
-				while(result == null)
+				var pr = _packer.PackRect(width, height, color);
+
+				// Double the size of the packer until the new rectangle will fit
+				while (pr == null)
 				{
-					// Grow our atlas size until the new rectangle can be packed
-					GrowPacker();
-					result = _packer.PackRect(width, height, color);
+					Packer newPacker = new Packer(_packer.Width * 2, _packer.Height * 2);
+
+					// Place existing rectangles
+					foreach (PackerRectangle existingRect in _packer.PackRectangles)
+					{
+						newPacker.PackRect(existingRect.Width, existingRect.Height, existingRect.Data);
+					}
+
+					// Now dispose old packer and assign new one
+					_packer.Dispose();
+					_packer = newPacker;
+
+					// Try to fit the rectangle again
+					pr = _packer.PackRect(width, height, color);
 				}
 
 				_addedLast = DateTime.Now;
