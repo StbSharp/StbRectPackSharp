@@ -30,13 +30,13 @@ Sample usage code
     
     // Pack a few rectangles
     // data1, data2, data3 are arbitrary user objects that will be stored within instances of PackRectangle class
-    // PackRect returns either object of PackRectangle class(packing was succesful) or null(no more place)
+    // PackRect returns either object of PackerRectangle class(packing was succesful) or null(no more place)
     packer.PackRect(10, 10, data1);
     packer.PackRect(15, 10, data2);
     packer.PackRect(2, 2, data3);
     
     // Enumerate packed rectangles
-    foreach(PackRectangle packRect in packer.PackRectangles)
+    foreach(PackerRectangle packRect in packer.PackRectangles)
     {
       // ...
     }
