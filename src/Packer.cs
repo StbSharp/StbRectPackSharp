@@ -47,24 +47,26 @@ namespace StbRectPackSharp
 		public List<PackerRectangle> PackRectangles => _rectangles;
 
 
-		public Packer(int initialWidth = 256, int initialHeight = 256)
+		public Packer(int width = 256, int height = 256)
 		{
-			if (initialWidth <= 0)
+			if (width <= 0)
 			{
-				throw new ArgumentOutOfRangeException(nameof(initialWidth));
+				throw new ArgumentOutOfRangeException(nameof(width));
 			}
 
-			if (initialHeight <= 0)
+			if (height <= 0)
 			{
-				throw new ArgumentOutOfRangeException(nameof(initialHeight));
+				throw new ArgumentOutOfRangeException(nameof(height));
 			}
 
 			// Initialize the context
-			var num_nodes = initialWidth;
+			var num_nodes = width;
 			_context = new stbrp_context(num_nodes);
 
 			fixed (stbrp_context* contextPtr = &_context)
-				stbrp_init_target(contextPtr, initialWidth, initialHeight, _context.all_nodes, num_nodes);
+			{
+				stbrp_init_target(contextPtr, width, height, _context.all_nodes, num_nodes);
+			}
 		}
 
 		public void Dispose()
