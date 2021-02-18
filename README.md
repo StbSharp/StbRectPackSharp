@@ -28,6 +28,7 @@ Sample usage code
     Packer packer = new Packer(128, 128);
     
     // Pack a few rectangles
+    // data1, data2, data3 are arbitrary user objects
     packer.PackRect(10, 10, data1);
     packer.PackRect(15, 10, data2);
     packer.PackRect(2, 2, data3);
