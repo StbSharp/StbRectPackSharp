@@ -20,6 +20,7 @@ There are two ways of referencing StbRectPackSharp in the project:
      
 # Usage
 StbRectPackSharp exposes API similar to [stb_rect_pack.h](https://github.com/nothings/stb/blob/master/stb_rect_pack.h). 
+
 Also it has class wrapper Packer.
 
 Sample usage code
@@ -40,7 +41,10 @@ Sample usage code
       // ...
     }
 ```
-If there's no more space to fit the new rectangle, then PackRect method will return null. It could be addressed by creating newer and bigger Packer.
+
+If there's no more space to fit the new rectangle, then PackRect method will return null. 
+
+It could be addressed by creating newer and bigger Packer.
 I.e.
 ```c#
     PackRectangle pr = packer.PackRect(800, 600, data4);
