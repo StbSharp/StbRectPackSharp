@@ -3,7 +3,7 @@
 ![Build & Publish](https://github.com/StbSharp/StbRectPackSharp/workflows/Build%20&%20Publish/badge.svg)
 [![Chat](https://img.shields.io/discord/628186029488340992.svg)](https://discord.gg/ZeHxhCY)
 
-StbRectPackSharp is C# port of the [stb_rect_pack.h](https://github.com/nothings/stb/blob/master/stb_rect_pack.h), which is C library to resize images.
+StbRectPackSharp is C# port of the [stb_rect_pack.h](https://github.com/nothings/stb/blob/master/stb_rect_pack.h), which is C library to pack rectangles on atlas.
 
 # Adding Reference
 There are two ways of referencing StbRectPackSharp in the project:
