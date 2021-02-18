@@ -6,8 +6,8 @@
     <TargetFrameworks>netstandard2.0;net45</TargetFrameworks>
     <Description>C# port of the stb_image_resize.h</Description>
     <PackageProjectUrl>https://github.com/StbSharp/StbRectPackSharp</PackageProjectUrl>
-    <PackageLicenseUrl>Public Domain</PackageLicenseUrl>
-    <Version>1.00.1</Version>
+    <PackageLicenseExpression>Unlicense</PackageLicenseExpression>
+    <Version>1.00.2</Version>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   

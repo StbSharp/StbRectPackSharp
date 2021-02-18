@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using static StbRectPackSharp.StbRectPack;
 
@@ -20,39 +21,49 @@ namespace StbRectPackSharp
 	/// <summary>
 	/// Simple Packer class that doubles size of the atlas if the place runs out
 	/// </summary>
-	public unsafe class Packer
+	public unsafe class Packer: IDisposable
 	{
 		private stbrp_context _context;
-		private int _padding;
 		private List<PackerRectangle> _rectangles = new List<PackerRectangle>();
 
 		public int Width => _context.width;
 		public int Height => _context.height;
-		public int Padding => _padding;
 
 		public List<PackerRectangle> PackRectangles => _rectangles;
 
 
-		public Packer(int initialWidth = 256, int initialHeight = 256, int padding = 0)
+		public Packer(int initialWidth = 256, int initialHeight = 256)
 		{
-			InitContext(initialWidth, initialHeight, padding);
-
+			InitContext(initialWidth, initialHeight);
 		}
 
-		private void InitContext(int width, int height, int padding)
+		public void Dispose()
 		{
-			var num_nodes = width - padding;
-			var nodes = new stbrp_node[num_nodes];
+			_context.Dispose();
+		}
 
-			stbrp_context newContext = new stbrp_context();
+		private void InitContext(int width, int height)
+		{
+			if (width <= 0)
+			{
+				throw new ArgumentOutOfRangeException(nameof(width));
+			}
 
-			// Allocate extras
-			newContext.extra = (stbrp_node*)CRuntime.malloc(sizeof(stbrp_node) * 2);
-			fixed (stbrp_node* nodesPtr = nodes)
-				stbrp_init_target(&newContext, width, height, nodesPtr, num_nodes);
+			if (height <= 0)
+			{
+				throw new ArgumentOutOfRangeException(nameof(height));
+			}
+
+			// Dispose old context
+			_context.Dispose();
+
+			// Create new one
+			var num_nodes = width;
+			stbrp_context newContext = new stbrp_context(num_nodes);
+
+			stbrp_init_target(&newContext, width, height, newContext.all_nodes, num_nodes);
 
 			_context = newContext;
-			_padding = padding;
 			_rectangles = new List<PackerRectangle>();
 		}
 
@@ -77,7 +88,7 @@ namespace StbRectPackSharp
 
 				// Can't fit
 				// Create new context two times bigger than existing
-				InitContext(_context.width * 2, _context.height * 2, _padding);
+				InitContext(_context.width * 2, _context.height * 2);
 
 				// Place old rectangles
 				foreach(var r in oldRectangles)
