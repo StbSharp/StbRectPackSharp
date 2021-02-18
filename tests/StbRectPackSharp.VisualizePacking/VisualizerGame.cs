@@ -56,7 +56,7 @@ namespace StbImageSharp.Samples.MonoGame
 			_fontSystem.AddFont(data);
 		}
 
-		private void GrowContext()
+		private void GrowPacker()
 		{
 			var oldPacker = _packer;
 
@@ -84,7 +84,7 @@ namespace StbImageSharp.Samples.MonoGame
 				while(result == null)
 				{
 					// Grow our atlas size until the new rectangle can be packed
-					GrowContext();
+					GrowPacker();
 					result = _packer.PackRect(width, height, color);
 				}
 
