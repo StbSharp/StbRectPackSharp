@@ -35,7 +35,7 @@ Sample usage code
     // Enumerate packed rectangles
     foreach(var packRect in packer.PackRectangles)
     {
-//    
+      // ...
     }
 ```
 
