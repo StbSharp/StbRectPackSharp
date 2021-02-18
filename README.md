@@ -20,7 +20,7 @@ There are two ways of referencing StbRectPackSharp in the project:
      
 # Usage
 StbRectPackSharp exposes API similar to [stb_rect_pack.h](https://github.com/nothings/stb/blob/master/stb_rect_pack.h). 
-Also it has class wrapper Packer that implements simple auto-growing rectangle packer.
+Also it has class wrapper Packer.
 
 Sample usage code
 ```c# 
