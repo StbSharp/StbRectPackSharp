@@ -4,10 +4,10 @@
     <Product>StbRectPackSharp</Product>
     <PackageId>StbRectPackSharp</PackageId>
     <TargetFrameworks>netstandard2.0;net45</TargetFrameworks>
-    <Description>C# port of the stb_image_resize.h</Description>
+    <Description>C# port of the stb_rect_pack.h</Description>
     <PackageProjectUrl>https://github.com/StbSharp/StbRectPackSharp</PackageProjectUrl>
     <PackageLicenseExpression>Unlicense</PackageLicenseExpression>
-    <Version>1.00.3</Version>
+    <Version>1.00.4</Version>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   

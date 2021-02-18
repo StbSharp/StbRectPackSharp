@@ -5,7 +5,12 @@ using static StbRectPackSharp.StbRectPack;
 
 namespace StbRectPackSharp
 {
-	public class PackerRectangle
+#if !STBSHARP_INTERNAL
+	public
+#else
+	internal
+#endif
+	class PackerRectangle
 	{
 		public Rectangle Rectangle { get; private set; }
 
@@ -26,7 +31,12 @@ namespace StbRectPackSharp
 	/// <summary>
 	/// Simple Packer class that doubles size of the atlas if the place runs out
 	/// </summary>
-	public unsafe class Packer: IDisposable
+#if !STBSHARP_INTERNAL
+	public
+#else
+	internal
+#endif
+	unsafe class Packer: IDisposable
 	{
 		private stbrp_context _context;
 		private List<PackerRectangle> _rectangles = new List<PackerRectangle>();
@@ -72,7 +82,14 @@ namespace StbRectPackSharp
 			_rectangles = new List<PackerRectangle>();
 		}
 
-		private PackerRectangle InternalPackRect(int width, int height, object data)
+		/// <summary>
+		/// Packs a rect. Returns null, if there's no more place left.
+		/// </summary>
+		/// <param name="width"></param>
+		/// <param name="height"></param>
+		/// <param name="userData"></param>
+		/// <returns></returns>
+		public PackerRectangle PackRect(int width, int height, object userData)
 		{
 			var rect = new stbrp_rect
 			{
@@ -92,34 +109,8 @@ namespace StbRectPackSharp
 				return null;
 			}
 
-			var packRectangle = new PackerRectangle(new Rectangle(rect.x, rect.y, rect.w, rect.h), data);
+			var packRectangle = new PackerRectangle(new Rectangle(rect.x, rect.y, rect.w, rect.h), userData);
 			_rectangles.Add(packRectangle);
-
-			return packRectangle;
-		}
-
-		private void GrowContext()
-		{
-			var oldRectangles = _rectangles;
-
-			// Create new context two times bigger than existing
-			InitContext(_context.width * 2, _context.height * 2);
-
-			// Place old rectangles
-			foreach (var r in oldRectangles)
-			{
-				InternalPackRect(r.Rectangle.Width, r.Rectangle.Height, r.Data);
-			}
-		}
-
-		public PackerRectangle PackRect(int width, int height, object data)
-		{
-			var packRectangle = InternalPackRect(width, height, data);
-			while(packRectangle == null)
-			{
-				GrowContext();
-				packRectangle = InternalPackRect(width, height, data);
-			}
 
 			return packRectangle;
 		}

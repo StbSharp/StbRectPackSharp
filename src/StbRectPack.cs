@@ -2,7 +2,12 @@
 
 namespace StbRectPackSharp
 {
-	public static unsafe partial class StbRectPack
+#if !STBSHARP_INTERNAL
+	public
+#else
+	internal
+#endif
+	static unsafe partial class StbRectPack
 	{
 		public struct stbrp_context: IDisposable
 		{
@@ -25,12 +30,11 @@ namespace StbRectPackSharp
 					throw new ArgumentOutOfRangeException(nameof(nodesCount));
 				}
 
-				width = height = align = init_mode = heuristic = 0;
+				width = height = align = init_mode = heuristic = num_nodes = 0;
 				active_head = free_head = null;
 
 				// Allocate nodes
-				num_nodes = nodesCount;
-				all_nodes = (stbrp_node*)CRuntime.malloc(sizeof(stbrp_node) * num_nodes);
+				all_nodes = (stbrp_node*)CRuntime.malloc(sizeof(stbrp_node) * nodesCount);
 
 				// Allocate extras
 				extra = (stbrp_node*)CRuntime.malloc(sizeof(stbrp_node) * 2);

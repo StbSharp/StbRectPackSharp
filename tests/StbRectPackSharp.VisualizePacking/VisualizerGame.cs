@@ -20,7 +20,7 @@ namespace StbImageSharp.Samples.MonoGame
 		private SpriteBatch _spriteBatch;
 		private Texture2D _white;
 		private readonly Random _random = new Random();
-		private readonly Packer _packer = new Packer(128, 128);
+		private Packer _packer = new Packer(128, 128);
 		private DateTime? _addedLast;
 		private FontSystem _fontSystem;
 
@@ -56,6 +56,20 @@ namespace StbImageSharp.Samples.MonoGame
 			_fontSystem.AddFont(data);
 		}
 
+		private void GrowContext()
+		{
+			var oldPacker = _packer;
+
+			// Create new packer two times bigger than existing
+			_packer = new Packer(oldPacker.Width * 2, oldPacker.Height * 2);
+
+			// Place old rectangles
+			foreach (var r in oldPacker.PackRectangles)
+			{
+				_packer.PackRect(r.Width, r.Height, r.Data);
+			}
+		}
+
 		protected override void Update(GameTime gameTime)
 		{
 			base.Update(gameTime);
@@ -63,8 +77,16 @@ namespace StbImageSharp.Samples.MonoGame
 			if (_addedLast == null || (DateTime.Now - _addedLast.Value).TotalMilliseconds >= RectangleAddDelayInMs)
 			{
 				var color = new Color(_random.Next(0, 256), _random.Next(0, 256), _random.Next(0, 256));
+				var width = _random.Next(1, MaximumRectangleSize);
+				var height = _random.Next(1, MaximumRectangleSize);
 
-				_packer.PackRect(_random.Next(0, MaximumRectangleSize), _random.Next(0, MaximumRectangleSize), color);
+				var result = _packer.PackRect(width, height, color);
+				while(result == null)
+				{
+					// Grow our atlas size until the new rectangle can be packed
+					GrowContext();
+					result = _packer.PackRect(width, height, color);
+				}
 
 				_addedLast = DateTime.Now;
 			}
