@@ -109,13 +109,15 @@ namespace StbImageSharp.Samples.MonoGame
 			DrawRectangle(_spriteBatch, _white, new Rectangle(0, 0, _packer.Width + BorderThickness * 2, _packer.Height + +BorderThickness * 2), Color.White, BorderThickness);
 
 
-			foreach(var packRectangle in _packer.PackRectangles)
+			foreach(var rect in _packer.PackRectangles)
 			{
-				var rect = packRectangle.Rectangle;
-				_spriteBatch.Draw(_white, new Rectangle(rect.X + BorderThickness, rect.Y + BorderThickness, rect.Width, rect.Height), (Color)packRectangle.Data);
+				_spriteBatch.Draw(_white, new Rectangle(rect.X + BorderThickness, rect.Y + BorderThickness, rect.Width, rect.Height), (Color)rect.Data);
 			}
 
 			var font = _fontSystem.GetFont(32);
+
+			font.DrawText(_spriteBatch, "Rectangles: " + _packer.PackRectangles.Count, new Vector2(BorderThickness, BorderThickness), Color.White);
+
 			var text = _packer.Width + "x" + _packer.Height;
 			var size = font.MeasureString(text);
 

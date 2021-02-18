@@ -9,6 +9,11 @@ namespace StbRectPackSharp
 	{
 		public Rectangle Rectangle { get; private set; }
 
+		public int X => Rectangle.X;
+		public int Y => Rectangle.Y;
+		public int Width => Rectangle.Width;
+		public int Height => Rectangle.Height;
+
 		public object Data { get; private set; }
 
 		public PackerRectangle(Rectangle rect, object data)
@@ -67,7 +72,7 @@ namespace StbRectPackSharp
 			_rectangles = new List<PackerRectangle>();
 		}
 
-		public PackerRectangle PackRect(int width, int height, object data)
+		private PackerRectangle InternalPackRect(int width, int height, object data)
 		{
 			var rect = new stbrp_rect
 			{
@@ -84,22 +89,37 @@ namespace StbRectPackSharp
 
 			if (result == 0)
 			{
-				var oldRectangles = _rectangles;
-
-				// Can't fit
-				// Create new context two times bigger than existing
-				InitContext(_context.width * 2, _context.height * 2);
-
-				// Place old rectangles
-				foreach(var r in oldRectangles)
-				{
-					PackRect(r.Rectangle.Width, r.Rectangle.Height, r.Data);
-				}
+				return null;
 			}
 
 			var packRectangle = new PackerRectangle(new Rectangle(rect.x, rect.y, rect.w, rect.h), data);
-
 			_rectangles.Add(packRectangle);
+
+			return packRectangle;
+		}
+
+		private void GrowContext()
+		{
+			var oldRectangles = _rectangles;
+
+			// Create new context two times bigger than existing
+			InitContext(_context.width * 2, _context.height * 2);
+
+			// Place old rectangles
+			foreach (var r in oldRectangles)
+			{
+				InternalPackRect(r.Rectangle.Width, r.Rectangle.Height, r.Data);
+			}
+		}
+
+		public PackerRectangle PackRect(int width, int height, object data)
+		{
+			var packRectangle = InternalPackRect(width, height, data);
+			while(packRectangle == null)
+			{
+				GrowContext();
+				packRectangle = InternalPackRect(width, height, data);
+			}
 
 			return packRectangle;
 		}

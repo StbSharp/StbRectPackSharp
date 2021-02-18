@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StbRectPackSharp", "src\Stb
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StbRectPackSharp.VisualizePacking", "tests\StbRectPackSharp.VisualizePacking\StbRectPackSharp.VisualizePacking.csproj", "{4FA734D9-88AE-4B0A-A3FF-93E7C026F103}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StbRectPackSharp.Tests", "tests\StbRectPackSharp.Tests\StbRectPackSharp.Tests.csproj", "{1EB3D13F-1AAA-4B38-B5F2-0BCA8465D500}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,12 +25,17 @@ Global
 		{4FA734D9-88AE-4B0A-A3FF-93E7C026F103}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4FA734D9-88AE-4B0A-A3FF-93E7C026F103}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4FA734D9-88AE-4B0A-A3FF-93E7C026F103}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1EB3D13F-1AAA-4B38-B5F2-0BCA8465D500}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1EB3D13F-1AAA-4B38-B5F2-0BCA8465D500}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1EB3D13F-1AAA-4B38-B5F2-0BCA8465D500}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1EB3D13F-1AAA-4B38-B5F2-0BCA8465D500}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{4FA734D9-88AE-4B0A-A3FF-93E7C026F103} = {AD5041AC-C96B-42F8-BC8C-BFFD2090B364}
+		{1EB3D13F-1AAA-4B38-B5F2-0BCA8465D500} = {AD5041AC-C96B-42F8-BC8C-BFFD2090B364}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C9C812E7-F89A-4B6E-8F9D-981D5F8BBAB3}
