@@ -22,8 +22,13 @@ namespace StbImageResizeSharp.Generator
 
 			data = data.Replace("((void*)(0))", "null");
 			data = data.Replace("((void *)(0))", "null");
-			data = data.Replace("ulong input_stride_bytes = (ulong)(stbir_info.input_stride_bytes)", "int input_stride_bytes = stbir_info.input_stride_bytes");
-			data = data.Replace("(sizeof((stbir__filter_info_table)) / sizeof(((stbir__filter_info_table)[0])))", "stbir__filter_info_table.Length");
+			data = data.Replace("default: ;", "default: throw new Exception(\"Mode \" + context->init_mode + \" is not supported.\");");
+			data = data.Replace("(int)(((p->w) > (q->w))?-1:((p->w) < (q->w)))",
+				"(int)(((p->w) > (q->w))?-1:((p->w) < (q->w))?1:0)");
+			data = data.Replace("(int)(((p->was_packed) < (q->was_packed))?-1:((p->was_packed) > (q->was_packed)))", 
+				"(int)(((p->was_packed) < (q->was_packed))?-1:((p->was_packed) > (q->was_packed))?1:0)");
+			data = data.Replace("(int)(!(((rects[i].x) == (0xffff)) && ((rects[i].y) == (0xffff))))",
+				"(((rects[i].x) == (0xffff)) && ((rects[i].y) == (0xffff)))?0:1");
 
 			return data;
 		}
@@ -32,13 +37,14 @@ namespace StbImageResizeSharp.Generator
 		{
 			var parameters = new ConversionParameters
 			{
-				InputPath = @"stb_image_resize.h",
-				Defines = new[]
+				InputPath = @"stb_rect_pack.h",
+				Defines = new string[]
 				{
-					"STB_IMAGE_RESIZE_IMPLEMENTATION"
+					"STB_RECT_PACK_IMPLEMENTATION"
 				},
 				SkipStructs = new string[]
 				{
+					"stbrp_context"
 				},
 				SkipGlobalVariables = new string[]
 				{
@@ -68,8 +74,8 @@ namespace StbImageResizeSharp.Generator
 
 			sb.AppendLine();
 
-			sb.Append("namespace StbImageResizeSharp\n{\n\t");
-			sb.AppendLine("unsafe partial class StbImageResize\n\t{");
+			sb.Append("namespace StbRectPackSharp\n{\n\t");
+			sb.AppendLine("unsafe partial class StbRectPack\n\t{");
 
 			Write(result.Constants, sb);
 			Write(result.GlobalVariables, sb);
@@ -84,7 +90,7 @@ namespace StbImageResizeSharp.Generator
 			Logger.Info("Post processing...");
 			data = PostProcess(data);
 
-			File.WriteAllText(@"..\..\..\..\..\src\StbImageResize.Generated.cs", data);
+			File.WriteAllText(@"..\..\..\..\..\src\StbRectPack.Generated.cs", data);
 		}
 
 		static void Main(string[] args)
