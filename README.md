@@ -40,8 +40,32 @@ Sample usage code
       // ...
     }
 ```
+If there's no more space to fit the new rectangle, then PackRect method will return null. It could be addressed by creating newer and bigger Packer.
+I.e.
+```c#
+    PackRectangle pr = packer.PackRect(800, 600, data4);
+    
+    // Double the size of the packer until the new rectangle will fit
+    while(pr == null)
+    {
+      Packer newPacker = new Packer(packer.Width * 2, packer.Height * 2);
+      
+      // Place existing rectangles
+      foreach(PackRectangle existingRect in packer.PackRectangles)
+      {
+        newPacker.PackRect(existingRect.Width, existingRect.Height, existingRect.Data);
+      }
+      
+      // Now dispose old packer and assign new one
+      packer.Dispose();
+      packer = newPacker;
+      
+      // Try to fit the rectangle again
+      pr = packer.PackRect(800, 600, data4);
+    }
+```
 
-See also sample [VisualizePacking](https://github.com/StbSharp/StbRectPackSharp/tree/master/tests/StbRectPackSharp.VisualizePacking) for more complicated example.
+See also sample [VisualizePacking](https://github.com/StbSharp/StbRectPackSharp/tree/master/tests/StbRectPackSharp.VisualizePacking) that uses above code.
 
 # License
 Public Domain
