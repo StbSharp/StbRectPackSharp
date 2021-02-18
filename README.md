@@ -1,6 +1,6 @@
 # StbRectPackSharp
 [![NuGet](https://img.shields.io/nuget/v/StbRectPackSharp.svg)](https://www.nuget.org/packages/StbRectPackSharp/) 
-![Build & Publish](https://github.com/rds1983/StbRectPackSharp/workflows/Build%20&%20Publish/badge.svg)
+![Build & Publish](https://github.com/StbSharp/StbRectPackSharp/workflows/Build%20&%20Publish/badge.svg)
 [![Chat](https://img.shields.io/discord/628186029488340992.svg)](https://discord.gg/ZeHxhCY)
 
 StbRectPackSharp is C# port of the [stb_rect_pack.h](https://github.com/nothings/stb/blob/master/stb_rect_pack.h), which is C library to resize images.
