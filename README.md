@@ -45,6 +45,7 @@ Sample usage code
 If there's no more space to fit the new rectangle, then PackRect method will return null. 
 
 It could be addressed by creating newer and bigger Packer.
+
 I.e.
 ```c#
     PackRectangle pr = packer.PackRect(800, 600, data4);
