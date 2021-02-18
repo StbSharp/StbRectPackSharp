@@ -21,7 +21,7 @@ There are two ways of referencing StbRectPackSharp in the project:
 # Usage
 StbRectPackSharp exposes API similar to [stb_rect_pack.h](https://github.com/nothings/stb/blob/master/stb_rect_pack.h). 
 
-Also it has class wrapper Packer.
+Also it has utility class Packer.
 
 Sample usage code
 ```c# 
