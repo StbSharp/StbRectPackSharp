@@ -24,8 +24,8 @@ Also it has class wrapper Packer.
 
 Sample usage code
 ```c# 
-    // Create packer with base size 128x128
-    Packer packer = new Packer(128, 128);
+    // Create packer with size 256x256
+    Packer packer = new Packer(256, 256);
     
     // Pack a few rectangles
     // data1, data2, data3 are arbitrary user objects that will be stored within instances of PackRectangle class
