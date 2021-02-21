@@ -50,6 +50,7 @@ I.e.
 ```c#
     PackerRectangle pr = packer.PackRect(800, 600, data4);
     
+    // If pr is null, it means there's no place for the new rect
     // Double the size of the packer until the new rectangle will fit
     while(pr == null)
     {
